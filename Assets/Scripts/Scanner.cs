@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class Scanner : MonoBehaviour
 {
-
     private LineRenderer _lineRenderer;
     private float _laserDistance = 3f;
     [SerializeField] private LayerMask _layerMask;
@@ -39,15 +38,20 @@ public class Scanner : MonoBehaviour
 
     public void Scan()
     {
-        RaycastHit hit;
-        if (Physics.Raycast(transform.position, transform.forward, out hit, _laserDistance, _layerMask))
+        if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, _laserDistance, _layerMask))
         {
             Debug.Log(hit.transform.gameObject.name);
-            BuyableObject obj = hit.transform.gameObject.GetComponentInParent<BuyableObject>();
-            Debug.Log("name : " + obj.DisplayName + ", price : " + obj.Price.ToString());
+            BuyableObject obj = hit.transform.gameObject.GetComponent<BuyableObject>();
+            if (obj == null)
+            {
+                obj = hit.transform.gameObject.GetComponentInParent<BuyableObject>();
+            }
+            if (obj != null)
+            {
+                Debug.Log("name : " + obj.DisplayName + ", price : " + obj.Price.ToString());
 
-            // TODO : Appeler fonction pour afficher dans l'UI et dans la liste d'achats
-
+                // TODO : Appeler fonction pour afficher dans l'UI et dans la liste d'achats
+            }
         }
     }
 
