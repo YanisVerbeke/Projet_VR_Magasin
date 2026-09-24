@@ -40,7 +40,6 @@ public class Scanner : MonoBehaviour
     {
         if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, _laserDistance, _layerMask))
         {
-            Debug.Log(hit.transform.gameObject.name);
             BuyableObject obj = hit.transform.gameObject.GetComponent<BuyableObject>();
             if (obj == null)
             {
@@ -48,9 +47,9 @@ public class Scanner : MonoBehaviour
             }
             if (obj != null)
             {
-                Debug.Log("name : " + obj.DisplayName + ", price : " + obj.Price.ToString());
+                //Debug.Log("name : " + obj.DisplayName + ", price : " + obj.Price.ToString());
 
-                // TODO : Appeler fonction pour afficher dans l'UI et dans la liste d'achats
+                UiManager.Instance.AddItemToList(obj.DisplayName, obj.Price);
             }
         }
     }
